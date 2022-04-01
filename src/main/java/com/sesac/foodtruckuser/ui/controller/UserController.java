@@ -6,6 +6,9 @@ import com.sesac.foodtruckuser.application.service.redis.RedisService;
 import com.sesac.foodtruckuser.ui.dto.*;
 import com.sesac.foodtruckuser.ui.dto.request.UserRequestDto;
 import io.micrometer.core.annotation.Timed;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
@@ -56,6 +59,11 @@ public class UserController {
      * @version 1.0.0
      * 작성일 2022-03-26
     **/
+    @ApiOperation(value = "개인 회원가입")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "회원가입에 성공했습니다."),
+            @ApiResponse(code = 400, message = "이미 가입되어 있는 유저입니다.")
+    })
     @PostMapping("/users/join")
     public ResponseEntity<?> signUpUser(@Valid @RequestBody UserRequestDto.JoinUserDto userDto, BindingResult results) {
 
@@ -75,6 +83,11 @@ public class UserController {
      * @version 1.0.0
      * 작성일 2022-03-29
     **/
+    @ApiOperation(value = "점주 회원가입")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "회원가입에 성공했습니다."),
+            @ApiResponse(code = 400, message = "이미 가입되어 있는 유저입니다.")
+    })
     @PostMapping("/managers/join")
     public ResponseEntity<?> signUpManager(@Valid @RequestBody UserRequestDto.JoinManagerDto managerDto, BindingResult results) {
 
@@ -96,6 +109,11 @@ public class UserController {
      * 작성일 2022-03-27
     **/
     // 로그인
+    @ApiOperation(value = "로그인")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "로그인에 성공했습니다."),
+//            @ApiResponse(code = 400, message = "이미 가입되어 있는 유저입니다.")
+    })
     @PostMapping("/logins")
     public ResponseEntity<?> authorize(@RequestBody UserRequestDto.LoginUserDto requestUser) {
 
@@ -104,25 +122,25 @@ public class UserController {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(requestUser.getEmail(), requestUser.getPassword());
 
-        // loadUserByUsername메서드에서 리턴받은 user객체로 Authentication객체 생성
+        // loadUserByUsername 메서드에서 리턴받은 user 객체로 Authentication 객체 생성
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        // 생성된 객체를 SecurityContext에 저장
+        // 생성된 객체를 SecurityContext 에 저장
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // 생성된 객체로 TokenProvider.createToken 메서드를 통해 jwt토큰을 생성
+        // 생성된 객체로 TokenProvider.createToken 메서드를 통해 jwt 토큰을 생성
         String accessToken = jwtTokenProvider.createToken(authentication, false);
         String refreshToken = jwtTokenProvider.createToken(authentication, true);
 
-        // redis에 저장
+        // redis 에 저장
         redisService.setRefreshToken(requestUser.getEmail(), refreshToken);
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        // Header에 추가
+        // Header 에 추가
         httpHeaders.add("Authorization", "Bearer " + accessToken);
 
-        // jwt토큰
-        return response.successToken(new TokenDto(accessToken, refreshToken), httpHeaders, HttpStatus.OK);
+        // jwt 토큰
+        return response.successToken(new TokenDto(accessToken, refreshToken), "로그인에 성공했습니다.", httpHeaders, HttpStatus.OK);
     }
 
     /**
@@ -131,6 +149,11 @@ public class UserController {
      * @version 1.0.0
      * 작성일 2022-03-29
     **/
+    @ApiOperation(value = "로그아웃")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "로그아웃 되었습니다."),
+            @ApiResponse(code = 400, message = "잘못된 요청입니다.")
+    })
     @PostMapping("/users/logout")
     public ResponseEntity<?> logout(@Valid @RequestBody UserRequestDto.LogoutUserDto logoutDto, BindingResult results) {
 
@@ -151,6 +174,12 @@ public class UserController {
      * @version 1.0.0
      * 작성일 2022-03-29
     **/
+    @ApiOperation(value = "토큰 갱신")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "토큰 갱신에 성공했습니다."),
+            @ApiResponse(code = 400, message = "Refresh Token 정보가 유효하지 않습니다."),
+            @ApiResponse(code = 400, message = "잘못된 요청입니다.")
+    })
     @PostMapping("/users/refresh")
     public ResponseEntity<?> updateRefreshToken(@Valid @RequestBody UpdateTokenDto updateTokenDto, BindingResult results) {
 
@@ -171,6 +200,11 @@ public class UserController {
      * @version 1.0.0
      * 작성일 2022-03-28
      **/
+    @ApiOperation(value = "닉네임 수정")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "닉네임 수정이 완료되었습니다."),
+//            @ApiResponse(code = 400, message = "잘못된 요청입니다.")
+    })
     @PatchMapping("/name")
     public ResponseEntity<?> updateUsername(Principal principal,
                                       @Valid @RequestBody UserRequestDto.UpdateNameDto updateNameDto,
@@ -192,6 +226,11 @@ public class UserController {
      * @version 1.0.0
      * 작성일 2022-03-29
     **/
+    @ApiOperation(value = "비밀번호 수정")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "비밀번호 변경이 완료되었습니다."),
+            @ApiResponse(code = 400, message = "비밀번호가 일치하지 않습니다.")
+    })
     @PatchMapping("/password")
     public ResponseEntity<?> updatePassword(Principal principal,
                                       @Valid @RequestBody UserRequestDto.UpdatePwDto updatePwDto,
@@ -212,11 +251,15 @@ public class UserController {
      * @version 1.0.0
      * 작성일 2022-03-29
      **/
+    @ApiOperation(value = "이메일 중복 체크")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "이메일 중복 검증되었습니다."),
+            @ApiResponse(code = 400, message = "이메일이 중복되었습니다.")
+    })
     @PostMapping("/validation/email")
     public ResponseEntity<?> validateDuplicateEmail(@RequestBody UserDto userDto) {
 
         return userService.validateDuplicateEmail(userDto.getEmail());
-//        return new ResponseDto(HttpStatus.OK.value(), "이메일 중복 체크 성공");
     }
 
     /**
@@ -225,6 +268,11 @@ public class UserController {
      * @version 1.0.0
      * 작성일 2022-03-29
     **/
+    @ApiOperation(value = "닉네임 중복 체크")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "닉네임 중복 검증되었습니다."),
+            @ApiResponse(code = 400, message = "닉네임이 중복되었습니다.")
+    })
     @PostMapping("/validation/name")
     public ResponseEntity<?> validateDuplicateUsername(@RequestBody UserDto userDto) {
         return userService.validateDuplicateUser(userDto.getUsername());
