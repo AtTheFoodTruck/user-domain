@@ -15,7 +15,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value=Exception.class)
     public ResponseEntity<?> handleArgumentException(Exception e) {
-        return response.fail(e.getMessage(), HttpStatus.BAD_REQUEST); // 500
+        return response.fail(e.getMessage(), HttpStatus.BAD_REQUEST);  // 400
     }
-
 }
