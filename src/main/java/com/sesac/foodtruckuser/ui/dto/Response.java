@@ -53,12 +53,12 @@ public class Response {
      *     }
      * @author jaemin
      **/
-    public ResponseEntity<?> successToken(Object data, HttpHeaders headers, HttpStatus status) {
+    public ResponseEntity<?> successToken(Object data, String message, HttpHeaders headers, HttpStatus status) {
         Body body = Body.builder()
                 .state(status.value())
                 .data(data)
                 .result("success")
-                .message("")
+                .message(message)
                 .error(Collections.emptyList())
                 .build();
 

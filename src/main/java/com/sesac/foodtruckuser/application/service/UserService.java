@@ -274,7 +274,7 @@ public class UserService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Authorization", "Bearer " + newAccessToken);
 
-        return response.successToken(new TokenDto(newAccessToken, refreshToken), httpHeaders, HttpStatus.OK);
+        return response.successToken(new TokenDto(newAccessToken, refreshToken), "토큰 갱신에 성공했습니다.", httpHeaders, HttpStatus.OK);
     }
 
     /**
