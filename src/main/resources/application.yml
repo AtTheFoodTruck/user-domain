@@ -1,0 +1,56 @@
+server:
+  port: 8887
+
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/foodtruck
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+#  main:
+#    web-application-type: reactive
+  application:
+    name: user-service
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+jwt:
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: beans, health, busrefresh, refresh
+
+greeting:
+  message: Welcome to the Simple E-commerce.
+
+#debug: true
+
+# redis 설정
+redis:
+  lettuce:
+    pool:
+      max-active: 10
+      max-idle: 10
+      min-idle: 2
+  port: 6379  # default: 6379
+  host: localhost  # default: localhost
