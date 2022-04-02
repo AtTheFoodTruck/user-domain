@@ -1,7 +1,7 @@
 package com.sesac.foodtruckuser.infrastructure.persistence.mysql.entity;
 
-import com.sesac.domain.common.BaseEntity;
-import com.sesac.domain.item.entity.Store;
+//import com.sesac.domain.common.BaseEntity;
+//import com.sesac.domain.item.entity.Store;
 import com.sesac.foodtruckuser.infrastructure.persistence.mysql.repository.BaseEntity;
 import lombok.*;
 
@@ -27,7 +27,7 @@ public class Like extends BaseEntity {
     private User user;
 
     // Store
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "store_id")
-    private Store store;
+//    @ManyToOne(fetch = LAZY)
+//    @JoinColumn(name = "store_id")
+//    private Store store;
 }

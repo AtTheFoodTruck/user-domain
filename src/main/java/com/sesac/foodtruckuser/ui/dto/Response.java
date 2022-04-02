@@ -1,5 +1,6 @@
 package com.sesac.foodtruckuser.ui.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +12,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
+@Schema(description = "로그인 요청")
 @Component
 public class Response {
 

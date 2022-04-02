@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Configuration
-@Profile({"local", "dev"})
+//@Profile({"local", "dev"})
 public class SwaggerConfig {
     private static final String API_TITLE = "Food Truck Around Me";
     private static final String API_VERSION = "v1";
@@ -26,15 +26,26 @@ public class SwaggerConfig {
             "application/json"
     ));
 
+//    @Bean
+//    public Docket api() {
+//        return new Docket(DocumentationType.SWAGGER_2)
+//                .apiInfo(apiInfo())
+//                .produces(PRODUCES)
+//                .select()
+//                .apis(RequestHandlerSelectors.any())
+//                .paths(PathSelectors.any())
+//                .build();
+//    }
+
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.OAS_30)
-                .apiInfo(apiInfo())
                 .produces(PRODUCES)
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.sesac.foodtruckuser"))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .apiInfo(apiInfo());
     }
 
     private ApiInfo apiInfo() {

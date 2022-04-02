@@ -4,14 +4,19 @@ import com.sesac.foodtruckuser.application.service.api.BNoApiRestTemplate;
 import com.sesac.foodtruckuser.ui.dto.Helper;
 import com.sesac.foodtruckuser.ui.dto.Response;
 import com.sesac.foodtruckuser.ui.dto.request.BNoApiRequestDto;
-import io.swagger.annotations.*;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-@Api(value = "사업자등록번호 조회 API")
+@Tag(name = "users", description = "사업자등록번호 조회 API")
 @RequiredArgsConstructor
 @RequestMapping("/managers")
 @RestController
@@ -33,9 +38,11 @@ public class ApiController {
      * 작성일 2022/03/29
     **/
     @ApiOperation(value = "사업자등록번호 상태조회")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "인증 성곰"),
-            @ApiResponse(code = 400, message = "인증 실패")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "인증 성곰",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "400", description = "인증 실패",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
     })
     @PostMapping("/status")
     public ResponseEntity<?> bNoStatus(@RequestBody BNoApiRequestDto.BNoStatusDto statusDto, BindingResult results) {
@@ -60,9 +67,11 @@ public class ApiController {
      * 작성일 2022/03/29
     **/
     @ApiOperation(value = "사업자등록번호 진위여부")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "인증 성곰"),
-            @ApiResponse(code = 400, message = "인증 실패")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "인증 성곰",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "400", description = "인증 실패",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
     })
     @PostMapping("/validate")
     public ResponseEntity<?> bNoValidate(@RequestBody BNoApiRequestDto.BNoValidateDto BNoValidateDto, BindingResult results) {

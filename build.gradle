@@ -44,7 +44,7 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
 
     // actuator
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+//    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // p6spy
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.7.1'
@@ -59,6 +59,7 @@ dependencies {
     }
 
     // swagger-api
+    // https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter
     implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 }
 

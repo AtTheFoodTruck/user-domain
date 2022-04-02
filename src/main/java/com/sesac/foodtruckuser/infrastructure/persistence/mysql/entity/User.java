@@ -1,10 +1,10 @@
 package com.sesac.foodtruckuser.infrastructure.persistence.mysql.entity;
 
-import com.sesac.domain.common.BaseEntity;
-import com.sesac.domain.item.entity.Cart;
-import com.sesac.domain.item.entity.Store;
-import com.sesac.domain.order.entity.Order;
-import com.sesac.domain.order.entity.Review;
+//import com.sesac.domain.common.BaseEntity;
+//import com.sesac.domain.item.entity.Cart;
+//import com.sesac.domain.item.entity.Store;
+//import com.sesac.domain.order.entity.Order;
+//import com.sesac.domain.order.entity.Review;
 import com.sesac.foodtruckuser.infrastructure.persistence.mysql.repository.BaseEntity;
 import lombok.*;
 
@@ -35,25 +35,25 @@ public class User extends BaseEntity {
 //    private Role role;
 
     // Order
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders = new ArrayList<>();
-
-    // Store
-    @OneToOne(fetch = LAZY, mappedBy = "user")
-    private Store store;
-
-    // Review
-    @OneToMany(mappedBy = "user")
-    private List<Review> reviews = new ArrayList<>();
-
-    // Like
-    @OneToMany(mappedBy = "user")
-    private List<Like> likes = new ArrayList<>();
-
-    // Cart
-    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL) // User 삭제 시 cart 삭제?
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
+//    @OneToMany(mappedBy = "user")
+//    private List<Order> orders = new ArrayList<>();
+//
+//    // Store
+//    @OneToOne(fetch = LAZY, mappedBy = "user")
+//    private Store store;
+//
+//    // Review
+//    @OneToMany(mappedBy = "user")
+//    private List<Review> reviews = new ArrayList<>();
+//
+//    // Like
+//    @OneToMany(mappedBy = "user")
+//    private List<Like> likes = new ArrayList<>();
+//
+//    // Cart
+//    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL) // User 삭제 시 cart 삭제?
+//    @JoinColumn(name = "cart_id")
+//    private Cart cart;
 
     // Authority
     @ManyToMany

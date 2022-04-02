@@ -62,6 +62,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 // request 처리
                 .and()
                     .authorizeRequests()
+//                    .antMatchers("/swagger-ui/", "/v2/api-docs", "/configuration/**", "/webjars/**", "/swagger-ui/index.html").permitAll()
+                    .antMatchers("/v2/api-docs",
+                            "/configuration/ui",
+                            "/swagger-resources/**",
+                            "/configuration/security",
+                            "/swagger-ui.html",
+                            "/webjars/**").permitAll()
                     .antMatchers("/actuator/**").permitAll()
                     .antMatchers("/**").permitAll()
 //                    .anyRequest().permitAll()
@@ -77,5 +84,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 // JwtSecurityConfig filter에 추가한걸 적용
                 .and()
                     .apply(new JwtSecurityConfig(tokenProvider, redisTemplate));
+    }
+
+    @Override
+    public void configure(org.springframework.security.config.annotation.web.builders.WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**");
     }
 }

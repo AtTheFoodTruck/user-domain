@@ -5,10 +5,14 @@ import com.sesac.foodtruckuser.application.service.UserService;
 import com.sesac.foodtruckuser.application.service.redis.RedisService;
 import com.sesac.foodtruckuser.ui.dto.*;
 import com.sesac.foodtruckuser.ui.dto.request.UserRequestDto;
-import io.micrometer.core.annotation.Timed;
+import com.sesac.foodtruckuser.ui.dto.response.UserResponseDto;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
@@ -25,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 
+@Tag(name = "users", description = "유저 API")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -44,7 +49,6 @@ public class UserController {
     }
 
     @GetMapping("/health_check")
-    @Timed(value="users.status", longTask = true)
     public String status() {
         return String.format("It's Working in User Service"
                 + ", port(local.server.port)=" + env.getProperty("local.server.port")
@@ -59,11 +63,22 @@ public class UserController {
      * @version 1.0.0
      * 작성일 2022-03-26
     **/
-    @ApiOperation(value = "개인 회원가입")
-    @ApiResponses({
-            @ApiResponse(code = 201, message = "회원가입에 성공했습니다."),
-            @ApiResponse(code = 400, message = "이미 가입되어 있는 유저입니다.")
-    })
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "회원가입에 성공했습니다.",
+//                    content = @Content(schema = @Schema(implementation = UserResponseDto.JoinUserDto.class))),
+//            @ApiResponse(responseCode = "400", description = "이미 가입되어 있는 유저입니다.",
+//                    content = @Content(schema = @Schema(implementation = Response.class))),
+//    })
+    @Operation(tags = "users", summary = "로그인",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200", description = "ok"
+                            , content = @Content(schema = @Schema(implementation = UserResponseDto.JoinUserDto.class)))
+            })
+    @io.swagger.annotations.ApiResponses(
+            @io.swagger.annotations.ApiResponse(
+                    response = UserResponseDto.JoinUserDto.class, message = "ok", code=200)
+    )
     @PostMapping("/users/join")
     public ResponseEntity<?> signUpUser(@Valid @RequestBody UserRequestDto.JoinUserDto userDto, BindingResult results) {
 
@@ -84,9 +99,11 @@ public class UserController {
      * 작성일 2022-03-29
     **/
     @ApiOperation(value = "점주 회원가입")
-    @ApiResponses({
-            @ApiResponse(code = 201, message = "회원가입에 성공했습니다."),
-            @ApiResponse(code = 400, message = "이미 가입되어 있는 유저입니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "회원가입에 성공했습니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "400", description = "이미 가입되어 있는 유저입니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
     })
     @PostMapping("/managers/join")
     public ResponseEntity<?> signUpManager(@Valid @RequestBody UserRequestDto.JoinManagerDto managerDto, BindingResult results) {
@@ -110,9 +127,12 @@ public class UserController {
     **/
     // 로그인
     @ApiOperation(value = "로그인")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "로그인에 성공했습니다."),
-//            @ApiResponse(code = 400, message = "이미 가입되어 있는 유저입니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "로그인에 성공했습니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "400",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
+//            @ApiResponse(code = 400, message = "")
     })
     @PostMapping("/logins")
     public ResponseEntity<?> authorize(@RequestBody UserRequestDto.LoginUserDto requestUser) {
@@ -150,9 +170,12 @@ public class UserController {
      * 작성일 2022-03-29
     **/
     @ApiOperation(value = "로그아웃")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "로그아웃 되었습니다."),
-            @ApiResponse(code = 400, message = "잘못된 요청입니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "로그아웃 되었습니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청입니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
+
     })
     @PostMapping("/users/logout")
     public ResponseEntity<?> logout(@Valid @RequestBody UserRequestDto.LogoutUserDto logoutDto, BindingResult results) {
@@ -175,10 +198,13 @@ public class UserController {
      * 작성일 2022-03-29
     **/
     @ApiOperation(value = "토큰 갱신")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "토큰 갱신에 성공했습니다."),
-            @ApiResponse(code = 400, message = "Refresh Token 정보가 유효하지 않습니다."),
-            @ApiResponse(code = 400, message = "잘못된 요청입니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "토큰 갱신에 성공했습니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "400", description = "Refresh Token 정보가 유효하지 않습니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청입니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
     })
     @PostMapping("/users/refresh")
     public ResponseEntity<?> updateRefreshToken(@Valid @RequestBody UpdateTokenDto updateTokenDto, BindingResult results) {
@@ -201,9 +227,11 @@ public class UserController {
      * 작성일 2022-03-28
      **/
     @ApiOperation(value = "닉네임 수정")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "닉네임 수정이 완료되었습니다."),
-//            @ApiResponse(code = 400, message = "잘못된 요청입니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "닉네임 수정이 완료되었습니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "400", description = "해당하는 유저를 찾을 수 없습니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
     })
     @PatchMapping("/name")
     public ResponseEntity<?> updateUsername(Principal principal,
@@ -227,9 +255,11 @@ public class UserController {
      * 작성일 2022-03-29
     **/
     @ApiOperation(value = "비밀번호 수정")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "비밀번호 변경이 완료되었습니다."),
-            @ApiResponse(code = 400, message = "비밀번호가 일치하지 않습니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "비밀번호 변경이 완료되었습니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "400", description = "비밀번호가 일치하지 않습니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
     })
     @PatchMapping("/password")
     public ResponseEntity<?> updatePassword(Principal principal,
@@ -252,9 +282,11 @@ public class UserController {
      * 작성일 2022-03-29
      **/
     @ApiOperation(value = "이메일 중복 체크")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "이메일 중복 검증되었습니다."),
-            @ApiResponse(code = 400, message = "이메일이 중복되었습니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "이메일 중복 검증되었습니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "400", description = "이메일이 중복되었습니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
     })
     @PostMapping("/validation/email")
     public ResponseEntity<?> validateDuplicateEmail(@RequestBody UserDto userDto) {
@@ -269,9 +301,11 @@ public class UserController {
      * 작성일 2022-03-29
     **/
     @ApiOperation(value = "닉네임 중복 체크")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "닉네임 중복 검증되었습니다."),
-            @ApiResponse(code = 400, message = "닉네임이 중복되었습니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "닉네임 중복 검증되었습니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "400", description = "닉네임이 중복되었습니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
     })
     @PostMapping("/validation/name")
     public ResponseEntity<?> validateDuplicateUsername(@RequestBody UserDto userDto) {
