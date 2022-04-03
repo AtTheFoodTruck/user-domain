@@ -27,6 +27,8 @@ public class Like extends BaseEntity {
     private User user;
 
     // Store
+    private Long storeId;
+
 //    @ManyToOne(fetch = LAZY)
 //    @JoinColumn(name = "store_id")
 //    private Store store;

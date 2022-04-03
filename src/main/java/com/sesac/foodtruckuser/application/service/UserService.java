@@ -25,7 +25,9 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -199,7 +201,7 @@ public class UserService {
         int findUsers = userRepository.countByUsername(username);
 
         if (findUsers > 0) {
-            return response.fail("닉네임이 중복되었습니다", HttpStatus.BAD_REQUEST);
+            return response.fail("닉네임이 중복되었습니다.", HttpStatus.BAD_REQUEST);
         }
 
         return response.success("닉네임 중복 검증되었습니다.");
@@ -274,7 +276,7 @@ public class UserService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Authorization", "Bearer " + newAccessToken);
 
-        return response.successToken(new TokenDto(newAccessToken, refreshToken), "토큰 갱신에 성공했습니다.", httpHeaders, HttpStatus.OK);
+        return response.successToken(new TokenDto(newAccessToken, refreshToken), "", httpHeaders, HttpStatus.OK);
     }
 
     /**

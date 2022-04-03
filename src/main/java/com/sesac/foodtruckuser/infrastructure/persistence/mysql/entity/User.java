@@ -1,16 +1,9 @@
 package com.sesac.foodtruckuser.infrastructure.persistence.mysql.entity;
 
-//import com.sesac.domain.common.BaseEntity;
-//import com.sesac.domain.item.entity.Cart;
-//import com.sesac.domain.item.entity.Store;
-//import com.sesac.domain.order.entity.Order;
-//import com.sesac.domain.order.entity.Review;
 import com.sesac.foodtruckuser.infrastructure.persistence.mysql.repository.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
@@ -30,6 +23,40 @@ public class User extends BaseEntity {
     private String phoneNum;
     private boolean activated;
     private String bNo; // 사업자등록번호
+
+    // Order
+    private Long orderId;
+
+    // Store
+    private Long storeId;
+
+    // Review
+    private Long reviewId;
+
+    // Like
+    private Long likeId;
+
+    // Cart
+    private Long cartId;
+
+    // Authority
+    @ManyToMany
+    @JoinTable(
+            name = "user_authority",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
+    private Set<Authority> authorities;
+
+
+    // 회원정보 수정 - nickname
+    public void changeUser(String username) {
+        this.username = username;
+    }
+
+    // 회원정보 수정 - password
+    public void encodingPassword(String password) {
+        this.password = password;
+    }
 
 //    @Enumerated(EnumType.STRING)
 //    private Role role;
@@ -55,22 +82,5 @@ public class User extends BaseEntity {
 //    @JoinColumn(name = "cart_id")
 //    private Cart cart;
 
-    // Authority
-    @ManyToMany
-    @JoinTable(
-            name = "user_authority",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
-    private Set<Authority> authorities;
 
-
-    // 회원정보 수정 - nickname
-    public void changeUser(String username) {
-        this.username = username;
-    }
-
-    // 회원정보 수정 - password
-    public void encodingPassword(String password) {
-        this.password = password;
-    }
 }
