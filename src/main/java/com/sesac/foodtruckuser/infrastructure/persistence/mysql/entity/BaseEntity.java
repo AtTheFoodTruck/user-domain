@@ -1,4 +1,4 @@
-package com.sesac.foodtruckuser.infrastructure.persistence.mysql.repository;
+package com.sesac.foodtruckuser.infrastructure.persistence.mysql.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

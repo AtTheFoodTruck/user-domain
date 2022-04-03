@@ -1,12 +1,9 @@
 package com.sesac.foodtruckuser.infrastructure.persistence.mysql.entity;
 
-import com.sesac.foodtruckuser.infrastructure.persistence.mysql.repository.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
-
-import static javax.persistence.FetchType.LAZY;
 
 @Builder
 @AllArgsConstructor

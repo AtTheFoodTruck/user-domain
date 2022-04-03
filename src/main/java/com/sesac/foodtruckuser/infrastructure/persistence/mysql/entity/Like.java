@@ -2,7 +2,6 @@ package com.sesac.foodtruckuser.infrastructure.persistence.mysql.entity;
 
 //import com.sesac.domain.common.BaseEntity;
 //import com.sesac.domain.item.entity.Store;
-import com.sesac.foodtruckuser.infrastructure.persistence.mysql.repository.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
