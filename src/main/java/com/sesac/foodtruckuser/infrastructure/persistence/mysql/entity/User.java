@@ -55,6 +55,11 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
+    // 연관관계 편의 메서드 //
+    public void setStoreId(Long storeId) {
+        this.storeId = storeId;
+    }
+
 //    @Enumerated(EnumType.STRING)
 //    private Role role;
 

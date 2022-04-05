@@ -20,6 +20,7 @@ public class UserRequestDto {
     @Data
     @Builder
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class JoinUserDto {
 
         @Schema(description = "이메일", required = true)
@@ -50,6 +51,7 @@ public class UserRequestDto {
     @Schema(description = "점주 회원가입 정보")
     @Data
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class JoinManagerDto {
         @Schema(description = "이메일", required = true)
         @NotBlank(message = "이메일 정보는 필수입니다.")
@@ -85,6 +87,7 @@ public class UserRequestDto {
     @Schema(description = "로그인 정보")
     @Data
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class LoginUserDto {
 
         @Schema(description = "이메일", required = true)
@@ -107,6 +110,7 @@ public class UserRequestDto {
     @Getter
     @Setter
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class LogoutUserDto {
 
         @Schema(description = "Access Token", required = true)

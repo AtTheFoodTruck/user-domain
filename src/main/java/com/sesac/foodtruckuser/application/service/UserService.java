@@ -272,11 +272,16 @@ public class UserService {
         // 6. 새로운 토큰 생성
         String newAccessToken = jwtTokenProvider.createToken(authentication, false);
 
+        // id 추가
+        String email = authentication.getName();
+        User findUser = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("email 해당하는 회원이 존재하지 않습니다 " + email));
+        Long userId = findUser.getId();
+
         // 새로운 access token Headers 에 추가
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Authorization", "Bearer " + newAccessToken);
 
-        return response.successToken(new TokenDto(newAccessToken, refreshToken), "", httpHeaders, HttpStatus.OK);
+        return response.successToken(new TokenDto(newAccessToken, refreshToken, userId), "", httpHeaders, HttpStatus.OK);
     }
 
     /**

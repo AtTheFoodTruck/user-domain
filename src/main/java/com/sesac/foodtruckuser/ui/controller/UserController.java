@@ -3,8 +3,12 @@ package com.sesac.foodtruckuser.ui.controller;
 import com.sesac.foodtruckuser.application.security.jwt.JwtTokenProvider;
 import com.sesac.foodtruckuser.application.service.UserService;
 import com.sesac.foodtruckuser.application.service.redis.RedisService;
+import com.sesac.foodtruckuser.infrastructure.persistence.mysql.entity.User;
+import com.sesac.foodtruckuser.infrastructure.persistence.mysql.repository.UserRepository;
+import com.sesac.foodtruckuser.infrastructure.query.http.dto.StoreInfo;
 import com.sesac.foodtruckuser.ui.dto.*;
 import com.sesac.foodtruckuser.ui.dto.request.UserRequestDto;
+import com.sesac.foodtruckuser.ui.dto.response.CreateUserDto;
 import com.sesac.foodtruckuser.ui.dto.response.UserResponseDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,12 +26,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Tag(name = "users", description = "유저 API")
 @Slf4j
@@ -37,10 +45,40 @@ public class UserController {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final UserService userService;
+    private final UserRepository userRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final RedisService redisService;
     private final Response response;
     private final Environment env;
+
+    /**
+     * 회원정보 조회
+     *
+     * @author jaemin
+     * @version 1.0.0
+     * 작성일 2022-04-04
+     **/
+    @GetMapping("/users/info/{userId}")
+    public CreateUserDto userInfo(@RequestHeader(value="Authorization", required = true) String authorizationHeader,
+            @PathVariable Long userId) {
+
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new IllegalArgumentException("id 해당하는 회원이 존재하지 않습니다 " + userId)
+        );
+        return new CreateUserDto(user);
+    }
+
+    @PostMapping("/users/stores")
+    public void saveStoreInfo(@RequestHeader(value="Authorization", required = true) String authorizationHeader,
+                              @RequestBody StoreInfo storeInfo) {
+        User user = userRepository.findById(storeInfo.getUserId()).orElseThrow(
+                () -> new IllegalArgumentException("id 해당하는 회원이 존재하지 않습니다.)")
+                );
+
+        user.setStoreId(storeInfo.getStoreId());
+
+        log.info("user객체의 storeId는 ? " + user.getStoreId());
+    }
 
 
     @GetMapping("/welcome")
@@ -152,13 +190,18 @@ public class UserController {
         // redis 에 저장
         redisService.setRefreshToken(requestUser.getEmail(), refreshToken);
 
+        // id 추가
+        String email = authentication.getName();
+        User findUser = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("email 해당하는 회원이 존재하지 않습니다 " + email));
+        Long userId = findUser.getId();
+
         HttpHeaders httpHeaders = new HttpHeaders();
 
         // Header 에 추가
         httpHeaders.add("Authorization", "Bearer " + accessToken);
 
         // jwt 토큰
-        return response.successToken(new TokenDto(accessToken, refreshToken), "로그인에 성공했습니다.", httpHeaders, HttpStatus.OK);
+        return response.successToken(new TokenDto(accessToken, refreshToken, userId), "로그인에 성공했습니다.", httpHeaders, HttpStatus.OK);
     }
 
     /**
