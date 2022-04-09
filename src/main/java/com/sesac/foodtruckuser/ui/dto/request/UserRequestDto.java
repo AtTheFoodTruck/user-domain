@@ -1,6 +1,8 @@
 package com.sesac.foodtruckuser.ui.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
@@ -158,4 +160,47 @@ public class UserRequestDto {
         @JsonProperty("new_password")
         private String newPassword;
     }
+
+    /**
+     * 중복 체크 검증 DTO
+     * @author jaemin
+     * @version 1.0.0
+     * 작성일 2022-04-09
+    **/
+    @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+    @Builder
+    @AllArgsConstructor
+    @Data
+    public static class UserDto {
+        private Long id;
+        private String email;
+        private String username;
+        private String password;
+        private String phoneNum;
+        private boolean active;
+    }
+
+    /**
+     * Token update DTO
+     * @author jaemin
+     * @version 1.0.0
+     * 작성일 2022-04-09
+    **/
+    @Schema(description = "Token 갱신 정보")
+    @AllArgsConstructor
+    @Getter
+    public class UpdateTokenDto {
+        @Schema(description = "Access Token")
+        @NotBlank(message = "잘못된 요청입니다.")
+        @JsonProperty("access_token")
+        private String accessToken;
+
+        @Schema(description = "Refresh Token")
+        @NotBlank(message = "잘못된 요청입니다.")
+        @JsonProperty("refresh_token")
+        private String refreshToken;
+
+    }
+
+
 }

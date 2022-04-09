@@ -6,8 +6,6 @@ import com.sesac.foodtruckuser.infrastructure.persistence.mysql.entity.Authority
 import com.sesac.foodtruckuser.infrastructure.persistence.mysql.entity.User;
 import com.sesac.foodtruckuser.infrastructure.persistence.mysql.repository.UserRepository;
 import com.sesac.foodtruckuser.ui.dto.Response;
-import com.sesac.foodtruckuser.ui.dto.TokenDto;
-import com.sesac.foodtruckuser.ui.dto.UpdateTokenDto;
 import com.sesac.foodtruckuser.ui.dto.request.UserRequestDto;
 import com.sesac.foodtruckuser.ui.dto.response.UserResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -244,7 +242,7 @@ public class UserService {
      * 작성일 2022-03-29
     **/
     @Transactional
-    public ResponseEntity<?> updateRefreshToken(UpdateTokenDto tokenDto) {
+    public ResponseEntity<?> updateRefreshToken(UserRequestDto.UpdateTokenDto tokenDto) {
 
         // 1. dto에서 토큰 추출
         String accessToken = tokenDto.getAccessToken();
@@ -281,7 +279,7 @@ public class UserService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Authorization", "Bearer " + newAccessToken);
 
-        return response.successToken(new TokenDto(newAccessToken, refreshToken, userId), "", httpHeaders, HttpStatus.OK);
+        return response.successToken(new UserResponseDto.TokenDto(newAccessToken, refreshToken, userId), "", httpHeaders, HttpStatus.OK);
     }
 
     /**
