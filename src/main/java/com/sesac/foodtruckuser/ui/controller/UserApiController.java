@@ -280,9 +280,9 @@ public class UserApiController {
                     content = @Content(schema = @Schema(implementation = Response.class))),
     })
     @PostMapping("/validation/email")
-    public ResponseEntity<?> validateDuplicateEmail(@RequestBody UserRequestDto.UserDto userDto) {
+    public ResponseEntity<?> validateDuplicateEmail(@RequestBody UserRequestDto.DuplicateEmail duplicateEmail) {
 
-        return userService.validateDuplicateEmail(userDto.getEmail());
+        return userService.validateDuplicateEmail(duplicateEmail.getEmail());
     }
 
     /**
@@ -299,7 +299,12 @@ public class UserApiController {
                     content = @Content(schema = @Schema(implementation = Response.class))),
     })
     @PostMapping("/validation/name")
-    public ResponseEntity<?> validateDuplicateUsername(@RequestBody UserRequestDto.UserDto userDto) {
-        return userService.validateDuplicateUser(userDto.getUsername());
+    public ResponseEntity<?> validateDuplicateUsername(@Valid @RequestBody UserRequestDto.UpdateNameDto updateNameDto, BindingResult results) {
+
+        // validation 검증
+        if (results.hasErrors()) {
+            return response.invalidFields(Helper.refineErrors(results));
+        }
+        return userService.validateDuplicateUser(updateNameDto.getUsername());
     }
 }

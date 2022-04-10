@@ -162,6 +162,30 @@ public class UserRequestDto {
     }
 
     /**
+     * 중복 체크 검증 - email
+     * @author jjaen
+     * @version 1.0.0
+     * 작성일 2022/04/10
+    **/
+    @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+    @Data
+    public static class DuplicateEmail {
+        private String email;
+    }
+
+    /**
+     * 중복 체크 검증 - nickname
+     * @author jjaen
+     * @version 1.0.0
+     * 작성일 2022/04/10
+     **/
+    @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+    @Data
+    public static class DuplicateNickname {
+        private String username;
+    }
+
+    /**
      * Token update DTO
      * @author jaemin
      * @version 1.0.0

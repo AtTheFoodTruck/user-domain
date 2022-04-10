@@ -76,7 +76,6 @@ public class UserService {
         return response.success(new UserResponseDto.JoinUserDto(savedUser), "회원가입에 성공했습니다.", HttpStatus.CREATED);
     }
 
-    // TODO 점주에는 가게 정보까지 저장?
     /**
      * 점주 회원가입
      * @author jaemin
@@ -115,17 +114,6 @@ public class UserService {
 
         // toDTO
         return response.success(new UserResponseDto.JoinUserDto(savedUser), "회원가입에 성공했습니다.", HttpStatus.CREATED);
-    }
-
-    /**
-     * 회원 정보 조회
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022-03-28
-     * @param email
-     **/
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("해당하는 유저를 찾을 수 없습니다"));
     }
 
     /**
@@ -188,7 +176,7 @@ public class UserService {
             return response.fail("이메일이 중복되었습니다.", HttpStatus.BAD_REQUEST);
         }
 
-        return response.success("이메일 중복 검증되었습니다.");
+        return response.success("사용 가능한 이메일입니다.");
     }
 
     /**
@@ -204,7 +192,7 @@ public class UserService {
             return response.fail("닉네임이 중복되었습니다.", HttpStatus.BAD_REQUEST);
         }
 
-        return response.success("닉네임 중복 검증되었습니다.");
+        return response.success("사용 가능한 닉네임입니다.");
     }
 
     /**
