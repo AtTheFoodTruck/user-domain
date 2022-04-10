@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.sesac.foodtruckuser.infrastructure.persistence.mysql.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
 @Schema(description = "응답")
 public class UserResponseDto {
@@ -37,6 +39,20 @@ public class UserResponseDto {
             this.phoneNum = joinMember.getPhoneNum();
             this.bNo = joinMember.getBNo();
         }
+    }
+    /**
+     * Token 응답 DTO
+     * @author jaemin
+     * @version 1.0.0
+     * 작성일 2022-04-09
+    **/
+    @AllArgsConstructor
+    @Getter
+    public static class TokenDto {
+
+        private String accessToken;
+        private String refreshToken;
+        private Long userId;
     }
 
 }

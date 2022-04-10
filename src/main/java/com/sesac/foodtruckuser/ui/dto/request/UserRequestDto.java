@@ -140,4 +140,47 @@ public class UserRequestDto {
         @NotBlank(message = "새로운 비밀번호를 입력해주세요")
         private String newPassword;
     }
+
+    /**
+     * 중복 체크 검증 DTO
+     * @author jaemin
+     * @version 1.0.0
+     * 작성일 2022-04-09
+    **/
+    @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+    @Builder
+    @AllArgsConstructor
+    @Data
+    public static class UserDto {
+        private Long id;
+        private String email;
+        private String username;
+        private String password;
+        private String phoneNum;
+        private boolean active;
+    }
+
+    /**
+     * Token update DTO
+     * @author jaemin
+     * @version 1.0.0
+     * 작성일 2022-04-09
+    **/
+    @Schema(description = "Token 갱신 정보")
+    @AllArgsConstructor
+    @Getter
+    public class UpdateTokenDto {
+        @Schema(description = "Access Token")
+        @NotBlank(message = "잘못된 요청입니다.")
+        @JsonProperty("access_token")
+        private String accessToken;
+
+        @Schema(description = "Refresh Token")
+        @NotBlank(message = "잘못된 요청입니다.")
+        @JsonProperty("refresh_token")
+        private String refreshToken;
+
+    }
+
+
 }

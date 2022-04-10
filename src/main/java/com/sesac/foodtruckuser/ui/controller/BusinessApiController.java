@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/managers")
 @RestController
-public class ApiController {
+public class BusinessApiController {
 
     private final BNoApiRestTemplate apiRestTemplate;
     private final Response response;
