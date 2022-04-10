@@ -6,6 +6,7 @@ import com.sesac.foodtruckuser.infrastructure.query.http.dto.StoreInfo;
 import com.sesac.foodtruckuser.ui.dto.response.CreateUserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -38,6 +39,7 @@ public class UserController {
      * 작성일 2022-04-09
     **/
     @PostMapping("/users/stores")
+    @Transactional
     public void saveStoreInfo(@RequestHeader(value="Authorization", required = true) String authorizationHeader,
                               @RequestBody StoreInfo storeInfo) {
         User user = userRepository.findById(storeInfo.getUserId()).orElseThrow(
@@ -45,7 +47,5 @@ public class UserController {
         );
 
         user.setStoreId(storeInfo.getStoreId());
-
-        log.info("user객체의 storeId는 ? " + user.getStoreId());
     }
 }
