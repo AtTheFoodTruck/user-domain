@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sesac.foodtruckuser.ui.dto.request.BNoApiRequestDto;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class ApiReqValidateDto {
     private List<InnerDto> businesses = new ArrayList<>();  // 사업자 등록 번호
 
     @Getter
+    @NoArgsConstructor
     public static class InnerDto {
         @JsonProperty("b_no")
         private String bNo;                         // 사업자 등록 번호

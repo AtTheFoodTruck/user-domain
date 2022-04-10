@@ -48,7 +48,7 @@ public class UserService {
      * @author jaemin
      * @version 1.0.0
      * 작성일 2022-03-28
-    *
+     *
      * @param user*/
     @Transactional
     public ResponseEntity<?> signUpUser(UserRequestDto.JoinUserDto user) {
@@ -106,6 +106,7 @@ public class UserService {
                 .email(manager.getEmail())
                 .username(manager.getUsername())
                 .password(passwordEncoder.encode(manager.getPassword()))
+                .phoneNum(manager.getPhoneNum())
                 .authorities(Collections.singleton(authority))
                 .activated(true)
                 .bNo(manager.getBNo())
@@ -124,7 +125,7 @@ public class UserService {
      * @version 1.0.0
      * 작성일 2022-03-28
      * @param email
-    **/
+     **/
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("해당하는 유저를 찾을 수 없습니다"));
     }
@@ -134,7 +135,7 @@ public class UserService {
      * @author jaemin
      * @version 1.0.0
      * 작성일 2022-03-28
-    **/
+     **/
     @Transactional
     public ResponseEntity<?> updateUsername(String email, UserRequestDto.UpdateNameDto updateNameDto) {
         // 요청 유저 정보 조회
@@ -156,9 +157,10 @@ public class UserService {
      * @author jaemin
      * @version 1.0.0
      * 작성일 2022-03-29
-    **/
+     **/
     @Transactional
     public ResponseEntity<?> updatePassword(String email, UserRequestDto.UpdatePwDto updatePwDto) {
+
         // 요청 유저 정보 조회
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("해당하는 유저를 찾을 수 없습니다."));
 
@@ -171,7 +173,7 @@ public class UserService {
 
         // 비밀번호 업데이트
         user.encodingPassword(passwordEncoder.encode(updatePwDto.getNewPassword()));
-        
+
         return response.success("비밀번호 변경이 완료되었습니다.");
     }
 
@@ -212,7 +214,7 @@ public class UserService {
      * @author jaemin
      * @version 1.0.0
      * 작성일 2022-03-29
-    **/
+     **/
     @Transactional
     public ResponseEntity<?> logout(UserRequestDto.LogoutUserDto logoutDto) {
         // 1. AccessToken 검증
@@ -242,7 +244,7 @@ public class UserService {
      * @author jaemin
      * @version 1.0.0
      * 작성일 2022-03-29
-    **/
+     **/
     @Transactional
     public ResponseEntity<?> updateRefreshToken(UpdateTokenDto tokenDto) {
 
@@ -266,8 +268,6 @@ public class UserService {
         if (ObjectUtils.isEmpty(refreshTokenFromDB)) {
             return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
         }
-
-        // 받아온 토큰을 blacklist처리
 
         // 6. 새로운 토큰 생성
         String newAccessToken = jwtTokenProvider.createToken(authentication, false);

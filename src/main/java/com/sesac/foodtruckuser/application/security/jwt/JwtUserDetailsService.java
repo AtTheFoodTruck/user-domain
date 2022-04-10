@@ -1,5 +1,6 @@
 package com.sesac.foodtruckuser.application.security.jwt;
 
+import com.sesac.foodtruckuser.exception.UserException;
 import com.sesac.foodtruckuser.infrastructure.persistence.mysql.entity.User;
 import com.sesac.foodtruckuser.infrastructure.persistence.mysql.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component("userDetailsService")
@@ -30,9 +32,14 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(final String email) {
         // DB에서 유저정보와 권한정보를 조회
-        return userRepository.findByEmail(email)
-                .map(user -> createMember(email, user))
-                .orElseThrow(() -> new UsernameNotFoundException(email + " -> 데이터베이스에서 찾을 수 없습니다."));
+        User findUser = userRepository.findByEmail(email).orElseThrow(
+                () -> new UserException("존재하지 않는 " + email + "계정입니다")
+        );
+
+        return createMember(email, findUser);
+//        return userRepository.findByEmail(email)
+//                .map(user -> createMember(email, user))
+//                .orElseThrow(() -> new UsernameNotFoundException(email + " -> 데이터베이스에서 찾을 수 없습니다."));
     }
 
     private org.springframework.security.core.userdetails.User createMember(String email, User user) {

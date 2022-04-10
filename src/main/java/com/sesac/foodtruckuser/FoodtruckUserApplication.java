@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@EnableJpaAuditing
-@SpringBootApplication
-@EnableEurekaClient
 @EnableWebMvc
+@EnableJpaAuditing
+@EnableEurekaClient
+@SpringBootApplication
 public class FoodtruckUserApplication {
 
     public static void main(String[] args) {
