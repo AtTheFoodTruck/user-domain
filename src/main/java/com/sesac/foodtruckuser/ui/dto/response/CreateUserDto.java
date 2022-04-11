@@ -31,4 +31,24 @@ public class CreateUserDto {
         this.activated = user.isActivated();
         this.bNo = user.getBNo();
     }
+
+    /**
+     * CreateUserDto 의 설명 적기
+     * @author jaemin
+     * @version 1.0.0
+     * 작성일 2022/04/12
+     **/
+    @Data
+    public static class UserInfoResponse {
+        private Long userId;
+        private String userName;
+
+        public static UserInfoResponse of(User user) {
+            UserInfoResponse userInfoResponse = new UserInfoResponse();
+            userInfoResponse.userId = user.getId();
+            userInfoResponse.userName = user.getUsername();
+
+            return userInfoResponse;
+        }
+    }
 }

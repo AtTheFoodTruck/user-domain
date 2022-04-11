@@ -3,11 +3,16 @@ package com.sesac.foodtruckuser.ui.controller;
 import com.sesac.foodtruckuser.infrastructure.persistence.mysql.entity.User;
 import com.sesac.foodtruckuser.infrastructure.persistence.mysql.repository.UserRepository;
 import com.sesac.foodtruckuser.infrastructure.query.http.dto.StoreInfo;
+import com.sesac.foodtruckuser.ui.dto.Result;
 import com.sesac.foodtruckuser.ui.dto.response.CreateUserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -47,5 +52,24 @@ public class UserController {
         );
 
         user.setStoreId(storeInfo.getStoreId());
+    }
+    /**
+     * Request From Order Domain - 점주 주문 조회 페이지
+     * userId, userName
+     * @author jaemin
+     * @version 1.0.0
+     * 작성일 2022/04/12
+    **/
+    @GetMapping("/users/info/{userIds}")
+    public ResponseEntity<Result> getUsers(@RequestHeader(value="Authorization", required = true) String authorizationHeader,
+                                           @PathVariable("userIds") Iterable<Long> userIds) {
+
+        List<User> findUsers = userRepository.findAllById(userIds);
+
+        List<CreateUserDto.UserInfoResponse> userInfoResponses = findUsers.stream()
+                .map(user -> CreateUserDto.UserInfoResponse.of(user))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(Result.createSuccessResult(userInfoResponses));
     }
 }
