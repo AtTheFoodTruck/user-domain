@@ -65,7 +65,7 @@ public class UserApiController {
             @io.swagger.annotations.ApiResponse(
                     response = UserResponseDto.JoinUserDto.class, message = "ok", code=200)
     )
-    @PostMapping("/users/join")
+    @PostMapping("/users/v1/join")
     public ResponseEntity<?> signUpUser(@Valid @RequestBody UserRequestDto.JoinUserDto userDto, BindingResult results) {
 
         log.info("개인 회원가입");
@@ -91,7 +91,7 @@ public class UserApiController {
             @ApiResponse(responseCode = "400", description = "이미 가입되어 있는 유저입니다.",
                     content = @Content(schema = @Schema(implementation = Response.class))),
     })
-    @PostMapping("/managers/join")
+    @PostMapping("/users/v1/managers/join")
     public ResponseEntity<?> signUpManager(@Valid @RequestBody UserRequestDto.JoinManagerDto managerDto, BindingResult results) {
 
         log.info("점주 회원가입");
@@ -120,7 +120,7 @@ public class UserApiController {
                     content = @Content(schema = @Schema(implementation = Response.class))),
 //            @ApiResponse(code = 400, message = "")
     })
-    @PostMapping("/logins")
+    @PostMapping("/users/v1/logins")
     public ResponseEntity<?> authorize(@RequestBody UserRequestDto.LoginUserDto requestUser) {
 
         log.info("로그인 request");
@@ -168,7 +168,7 @@ public class UserApiController {
                     content = @Content(schema = @Schema(implementation = Response.class))),
 
     })
-    @PostMapping("/users/logout")
+    @PostMapping("/users/v1/logout")
     public ResponseEntity<?> logout(@Valid @RequestBody UserRequestDto.LogoutUserDto logoutDto, BindingResult results) {
 
         log.info("로그아웃");
@@ -197,7 +197,7 @@ public class UserApiController {
             @ApiResponse(responseCode = "400", description = "잘못된 요청입니다.",
                     content = @Content(schema = @Schema(implementation = Response.class))),
     })
-    @PostMapping("/users/refresh")
+    @PostMapping("/users/v1/refresh")
     public ResponseEntity<?> updateRefreshToken(@Valid @RequestBody UserRequestDto.UpdateTokenDto updateTokenDto, BindingResult results) {
 
         log.info("Access Token 갱신");
@@ -224,7 +224,7 @@ public class UserApiController {
             @ApiResponse(responseCode = "400", description = "해당하는 유저를 찾을 수 없습니다.",
                     content = @Content(schema = @Schema(implementation = Response.class))),
     })
-    @PatchMapping("/name")
+    @PatchMapping("/users/v1/mypage/name")
     public ResponseEntity<?> updateUsername(Principal principal,
                                       @Valid @RequestBody UserRequestDto.UpdateNameDto updateNameDto,
                                       BindingResult results) {
@@ -252,7 +252,7 @@ public class UserApiController {
             @ApiResponse(responseCode = "400", description = "비밀번호가 일치하지 않습니다.",
                     content = @Content(schema = @Schema(implementation = Response.class))),
     })
-    @PatchMapping("/password")
+    @PatchMapping("/users/v1/mypage/password")
     public ResponseEntity<?> updatePassword(Principal principal,
                                       @Valid @RequestBody UserRequestDto.UpdatePwDto updatePwDto,
                                       BindingResult results) {
@@ -279,7 +279,7 @@ public class UserApiController {
             @ApiResponse(responseCode = "400", description = "이메일이 중복되었습니다.",
                     content = @Content(schema = @Schema(implementation = Response.class))),
     })
-    @PostMapping("/validation/email")
+    @PostMapping("/users/v1/validation/email")
     public ResponseEntity<?> validateDuplicateEmail(@RequestBody UserRequestDto.DuplicateEmail duplicateEmail) {
 
         return userService.validateDuplicateEmail(duplicateEmail.getEmail());
@@ -298,7 +298,7 @@ public class UserApiController {
             @ApiResponse(responseCode = "400", description = "닉네임이 중복되었습니다.",
                     content = @Content(schema = @Schema(implementation = Response.class))),
     })
-    @PostMapping("/validation/name")
+    @PostMapping("/users/v1/validation/name")
     public ResponseEntity<?> validateDuplicateUsername(@Valid @RequestBody UserRequestDto.UpdateNameDto updateNameDto, BindingResult results) {
 
         // validation 검증

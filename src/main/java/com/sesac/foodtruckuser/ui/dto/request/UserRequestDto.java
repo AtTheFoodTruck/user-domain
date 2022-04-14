@@ -204,8 +204,6 @@ public class UserRequestDto {
         @NotBlank(message = "잘못된 요청입니다.")
         @JsonProperty("refresh_token")
         private String refreshToken;
-
     }
-
 
 }
