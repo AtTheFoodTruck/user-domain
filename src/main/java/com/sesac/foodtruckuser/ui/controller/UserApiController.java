@@ -91,7 +91,7 @@ public class UserApiController {
             @ApiResponse(responseCode = "400", description = "이미 가입되어 있는 유저입니다.",
                     content = @Content(schema = @Schema(implementation = Response.class))),
     })
-    @PostMapping("/users/v1/managers/join")
+    @PostMapping("/users/v1/owner/join")
     public ResponseEntity<?> signUpManager(@Valid @RequestBody UserRequestDto.JoinManagerDto managerDto, BindingResult results) {
 
         log.info("점주 회원가입");

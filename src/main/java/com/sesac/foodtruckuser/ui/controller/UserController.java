@@ -27,7 +27,7 @@ public class UserController {
      * @version 1.0.0
      * 작성일 2022-04-04
      **/
-    @GetMapping("/users/info/{userId}")
+    @GetMapping("/api/v1/info/{userId}")
     public CreateUserDto userInfo(@RequestHeader(value="Authorization", required = true) String authorizationHeader,
                                   @PathVariable Long userId) {
 
@@ -43,7 +43,7 @@ public class UserController {
      * @version 1.0.0
      * 작성일 2022-04-09
     **/
-    @PostMapping("/users/stores")
+    @PostMapping("/api/v1/stores")
     @Transactional
     public void saveStoreInfo(@RequestHeader(value="Authorization", required = true) String authorizationHeader,
                               @RequestBody StoreInfo storeInfo) {
@@ -60,7 +60,7 @@ public class UserController {
      * @version 1.0.0
      * 작성일 2022/04/12
     **/
-    @GetMapping("/users/info/{userIds}")
+    @GetMapping("/api/v1/info/{userIds}")
     public ResponseEntity<Result> getUsers(@RequestHeader(value="Authorization", required = true) String authorizationHeader,
                                            @PathVariable("userIds") Iterable<Long> userIds) {
 
