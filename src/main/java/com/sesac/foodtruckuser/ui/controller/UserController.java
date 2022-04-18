@@ -5,9 +5,12 @@ import com.sesac.foodtruckuser.infrastructure.persistence.mysql.repository.UserR
 import com.sesac.foodtruckuser.infrastructure.query.http.dto.StoreInfo;
 import com.sesac.foodtruckuser.ui.dto.Result;
 import com.sesac.foodtruckuser.ui.dto.response.CreateUserDto;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,13 +30,15 @@ public class UserController {
      * @version 1.0.0
      * 작성일 2022-04-04
      **/
-    @GetMapping("/api/v1/info/{userId}")
+    @ApiOperation(value = "Item Domain에서 요청 - 회원정보 조회")
+    @GetMapping("/api/v1/users/{userId}")
     public CreateUserDto userInfo(@RequestHeader(value="Authorization", required = true) String authorizationHeader,
                                   @PathVariable Long userId) {
 
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalArgumentException("id 해당하는 회원이 존재하지 않습니다 " + userId)
         );
+
         return new CreateUserDto(user);
     }
 
@@ -43,6 +48,7 @@ public class UserController {
      * @version 1.0.0
      * 작성일 2022-04-09
     **/
+    @ApiOperation(value = "Item Domain에서 요청 - user정보 저장")
     @PostMapping("/api/v1/stores")
     @Transactional
     public void saveStoreInfo(@RequestHeader(value="Authorization", required = true) String authorizationHeader,
@@ -53,13 +59,14 @@ public class UserController {
 
         user.setStoreId(storeInfo.getStoreId());
     }
-    /**
+    /**7
      * Request From Order Domain - 점주 주문 조회 페이지
      * userId, userName
      * @author jaemin
      * @version 1.0.0
      * 작성일 2022/04/12
     **/
+    @ApiOperation(value = "Order Domain에서 요청 - 점주 주문 조회 페이지")
     @GetMapping("/api/v1/info/{userIds}")
     public ResponseEntity<Result> getUsers(@RequestHeader(value="Authorization", required = true) String authorizationHeader,
                                            @PathVariable("userIds") Iterable<Long> userIds) {

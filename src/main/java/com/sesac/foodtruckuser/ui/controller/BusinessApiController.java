@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "users", description = "사업자등록번호 조회 API")
 @RequiredArgsConstructor
 @RequestMapping("/managers")
 @RestController
@@ -38,12 +37,6 @@ public class BusinessApiController {
      * 작성일 2022/03/29
     **/
     @ApiOperation(value = "사업자등록번호 상태조회")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "인증 성곰",
-                    content = @Content(schema = @Schema(implementation = Response.class))),
-            @ApiResponse(responseCode = "400", description = "인증 실패",
-                    content = @Content(schema = @Schema(implementation = Response.class))),
-    })
     @PostMapping("/status")
     public ResponseEntity<?> bNoStatus(@RequestBody BNoApiRequestDto.BNoStatusDto statusDto, BindingResult results) {
 
@@ -67,12 +60,6 @@ public class BusinessApiController {
      * 작성일 2022/03/29
     **/
     @ApiOperation(value = "사업자등록번호 진위여부")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "인증 성곰",
-                    content = @Content(schema = @Schema(implementation = Response.class))),
-            @ApiResponse(responseCode = "400", description = "인증 실패",
-                    content = @Content(schema = @Schema(implementation = Response.class))),
-    })
     @PostMapping("/validate")
     public ResponseEntity<?> bNoValidate(@RequestBody BNoApiRequestDto.BNoValidateDto BNoValidateDto, BindingResult results) {
 
