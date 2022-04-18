@@ -58,7 +58,7 @@ public class UserApiController {
                     response = UserResponseDto.JoinUserDto.class, message = "ok", code=200)
     )
     @ApiOperation(value = "개인 회원가입")
-    @PostMapping("/users/v1/join")
+    @PostMapping("/users/v1/joins")
     public ResponseEntity<?> signUpUser(@Valid @RequestBody UserRequestDto.JoinUserDto userDto, BindingResult results) {
 
         log.info("개인 회원가입");
