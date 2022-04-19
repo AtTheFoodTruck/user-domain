@@ -5,7 +5,8 @@ pipeline {
       steps {
         sh 'pwd'
         sh 'ls'
-        sh './gradlew clean build --exclude-task test'
+        sh '''sudo chmod 777 gradlew
+./gradlew clean build --exclude-task test'''
       }
     }
 
