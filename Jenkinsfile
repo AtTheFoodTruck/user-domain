@@ -12,7 +12,7 @@ pipeline {
 
     stage('Build Docker') {
       steps {
-        sh 'pwd'
+        sh 'backend_user = docker.build("goalgoru/backend_user")'
       }
     }
 
