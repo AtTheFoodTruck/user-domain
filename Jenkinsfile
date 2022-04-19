@@ -9,6 +9,7 @@ pipeline {
 ./gradlew clean build --exclude-task test
 '''
         sh 'ls'
+        sh 'cd build && ls'
       }
     }
 
