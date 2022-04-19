@@ -22,6 +22,18 @@ pipeline {
       }
     }
 
+    stage('Docker push') {
+      steps {
+        script {
+          docker.withRegistry('https://registry.hub.docker.com/', registryCredential) {
+            backend_user.push("latest")
+            backend_user.push("${BUILD_NUMBER}")
+          }
+        }
+
+      }
+    }
+
   }
   environment {
     registryCredential = 'dockerhub_cred'
