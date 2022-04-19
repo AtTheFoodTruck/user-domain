@@ -8,7 +8,7 @@ pipeline {
         sh '''sudo chmod 777 gradlew
 ./gradlew clean build --exclude-task test
 '''
-        sh 'ls'
+        sh 'ls && cat Dockerfile'
         sh 'cd build && ls'
       }
     }
