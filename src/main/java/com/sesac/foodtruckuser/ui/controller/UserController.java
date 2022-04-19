@@ -79,4 +79,10 @@ public class UserController {
 
         return ResponseEntity.ok(Result.createSuccessResult(userInfoResponses));
     }
+    
+    @GetMapping("/api/v1/ping")
+    public ResponseEntity<String> healthCheck() {
+        log.info("###health check");
+        return ResponseEntity.ok("pong");
+    }
 }
