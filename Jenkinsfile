@@ -3,7 +3,8 @@ pipeline {
   stages {
     stage('Build Gradle') {
       steps {
-        sh 'pwd'
+        sh '''pwd
+ls'''
       }
     }
 
