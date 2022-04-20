@@ -59,58 +59,6 @@ public class User extends BaseEntity {
     public void setStoreId(Long storeId) {
         this.storeId = storeId;
     }
-<<<<<<< Updated upstream
-=======
-
-//    @Enumerated(EnumType.STRING)
-//    private Role role;
-
-    // Order
-//    @OneToMany(mappedBy = "user")
-//    private List<Order> orders = new ArrayList<>();
-//
-//    // Store
-//    @OneToOne(fetch = LAZY, mappedBy = "user")
-//    private Store store;
-//
-//    // Review
-//    @OneToMany(mappedBy = "user")
-//    private List<Review> reviews = new ArrayList<>();
-//
-//    // Like
-//    @OneToMany(mappedBy = "user")
-//    private List<Like> likes = new ArrayList<>();
-//
-//    // Cart
-//    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL) // User 삭제 시 cart 삭제?
-//    @JoinColumn(name = "cart_id")
-//    private Cart cart;
-
->>>>>>> Stashed changes
-
-//    @Enumerated(EnumType.STRING)
-//    private Role role;
-
-    // Order
-//    @OneToMany(mappedBy = "user")
-//    private List<Order> orders = new ArrayList<>();
-//
-//    // Store
-//    @OneToOne(fetch = LAZY, mappedBy = "user")
-//    private Store store;
-//
-//    // Review
-//    @OneToMany(mappedBy = "user")
-//    private List<Review> reviews = new ArrayList<>();
-//
-//    // Like
-//    @OneToMany(mappedBy = "user")
-//    private List<Like> likes = new ArrayList<>();
-//
-//    // Cart
-//    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL) // User 삭제 시 cart 삭제?
-//    @JoinColumn(name = "cart_id")
-//    private Cart cart;
 
 
 }
