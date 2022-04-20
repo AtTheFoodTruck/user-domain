@@ -60,5 +60,4 @@ public class User extends BaseEntity {
         this.storeId = storeId;
     }
 
-
 }
