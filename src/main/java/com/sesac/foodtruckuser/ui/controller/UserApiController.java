@@ -100,7 +100,18 @@ public class UserApiController {
     **/
     // 로그인
     @ApiOperation(value = "로그인")
+<<<<<<< Updated upstream
     @PostMapping("/users/v1/logins")
+=======
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "로그인에 성공했습니다.",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "400",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
+//            @ApiResponse(code = 400, message = "")
+    })
+    @PostMapping("/logins")
+>>>>>>> Stashed changes
     public ResponseEntity<?> authorize(@RequestBody UserRequestDto.LoginUserDto requestUser) {
 
         log.info("로그인 request");

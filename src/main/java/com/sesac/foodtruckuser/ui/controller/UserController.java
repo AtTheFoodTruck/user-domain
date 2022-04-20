@@ -79,4 +79,5 @@ public class UserController {
 
         return ResponseEntity.ok(Result.createSuccessResult(userInfoResponses));
     }
+
 }
