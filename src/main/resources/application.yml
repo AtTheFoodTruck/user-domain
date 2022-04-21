@@ -2,7 +2,7 @@ server:
   port: 8887
 
 spring:
-#  datasource:
+  datasource:
     url: jdbc:mysql://userdb:3306/userdb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: 1234
