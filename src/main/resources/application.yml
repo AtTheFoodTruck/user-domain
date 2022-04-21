@@ -3,10 +3,10 @@ server:
 
 spring:
 #  datasource:
-#    url: jdbc:mysql://localhost:3306/userdb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
-#    username: root
-#    password: 1234
-#    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://userdb:3306/userdb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 #    url: jdbc:h2:tcp://localhost/~/foodtruck
 #    username: sa
