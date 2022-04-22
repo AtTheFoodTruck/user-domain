@@ -25,6 +25,16 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 #      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
+  # redis 설정
+  redis:
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        min-idle: 2
+    port: 6379  # default: 6379
+    host: redis  # default: localhost
+
 logging:
   level:
     org.hibernate.SQL: debug
@@ -49,12 +59,4 @@ management:
         include: beans, health, busrefresh, refresh
 #debug: true
 
-# redis 설정
-redis:
-  lettuce:
-    pool:
-      max-active: 10
-      max-idle: 10
-      min-idle: 2
-  port: 6379  # default: 6379
-  host: redis  # default: localhost
+
