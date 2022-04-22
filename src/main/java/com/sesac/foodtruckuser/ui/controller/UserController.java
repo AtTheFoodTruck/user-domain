@@ -69,7 +69,7 @@ public class UserController {
     @ApiOperation(value = "Order Domain에서 요청 - 점주 주문 조회 페이지")
     @GetMapping("/api/v1/info/{userIds}")
     public ResponseEntity<Result> getUsers(@RequestHeader(value="Authorization", required = true) String authorizationHeader,
-                                           @PathVariable("userIds") Iterable<Long> userIds) {
+                                           @PathVariable("userIds") List<Long> userIds) {
 
         List<User> findUsers = userRepository.findAllById(userIds);
 
