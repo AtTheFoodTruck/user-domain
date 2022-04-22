@@ -57,4 +57,4 @@ redis:
       max-idle: 10
       min-idle: 2
   port: 6379  # default: 6379
-  host: 112.220.188.217  # default: localhost
+  host: redis  # default: localhost
