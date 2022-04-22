@@ -3,17 +3,17 @@ server:
 
 spring:
   datasource:
-#    url: jdbc:mysql://userdb:3306/userdb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
-#    username: root
-#    password: 1234
-#    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://userdb:3306/userdb?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
-    url: jdbc:h2:tcp://localhost/~/foodtruck
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-#  main:
-#    web-application-type: reactive
+  #    url: jdbc:h2:tcp://localhost/~/foodtruck
+  #    username: sa
+  #    password:
+  #    driver-class-name: org.h2.Driver
+  #  main:
+  #    web-application-type: reactive
   application:
     name: user-service
   jpa:
@@ -22,8 +22,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
-#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-#      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  #      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
   # redis 설정
   redis:
@@ -33,7 +33,8 @@ spring:
         max-idle: 10
         min-idle: 2
     port: 6379  # default: 6379
-    host: localhost  # default: localhost
+    #    host: localhost  # default: localhost
+    host: redis  # default: localhost
 
 logging:
   level:
@@ -46,7 +47,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-#      defaultZone: http://127.0.0.1:8761/eureka
+      #      defaultZone: http://127.0.0.1:8761/eureka
       defaultZone: http://127.0.0.1:8761/eureka
 
 jwt:
