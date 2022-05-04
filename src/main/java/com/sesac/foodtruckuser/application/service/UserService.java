@@ -67,6 +67,7 @@ public class UserService {
                 .username(user.getUsername())
                 .password(passwordEncoder.encode(user.getPassword()))
                 .authorities(Collections.singleton(authority))
+                .phoneNum(user.getPhoneNum())
                 .activated(true)
                 .build();
 

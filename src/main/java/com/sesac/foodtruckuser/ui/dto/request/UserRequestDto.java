@@ -1,5 +1,6 @@
 package com.sesac.foodtruckuser.ui.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -118,6 +119,8 @@ public class UserRequestDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class UpdateNameDto {
+        @JsonIgnore
+        private Long userId;
 
         @NotBlank(message = "닉네임을 입력해주세요")
         private String username;
@@ -204,8 +207,6 @@ public class UserRequestDto {
         @NotBlank(message = "잘못된 요청입니다.")
         @JsonProperty("refresh_token")
         private String refreshToken;
-
     }
-
 
 }

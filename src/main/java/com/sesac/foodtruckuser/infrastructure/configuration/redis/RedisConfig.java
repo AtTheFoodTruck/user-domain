@@ -1,17 +1,26 @@
 package com.sesac.foodtruckuser.infrastructure.configuration.redis;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfig {
+
+    @Value("${spring.redis.host}")
+    private String host;
+
+    @Value("${spring.redis.port}")
+    private int port;
+
     @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory();
+    public LettuceConnectionFactory redisConnectionFactory() {
+        return new LettuceConnectionFactory(host, port);
     }
 
     @Bean
@@ -19,9 +28,32 @@ public class RedisConfig {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         redisTemplate.setKeySerializer(new StringRedisSerializer());
-
-        // Token 객체를 json 형태로 깨지지 않고 받기 위한 직렬화
         redisTemplate.setValueSerializer(new StringRedisSerializer());
         return redisTemplate;
     }
+
+    @Bean
+    public StringRedisTemplate stringRedisTemplate() {
+        final StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
+        stringRedisTemplate.setKeySerializer(new StringRedisSerializer());
+        stringRedisTemplate.setValueSerializer(new StringRedisSerializer());
+        stringRedisTemplate.setConnectionFactory(redisConnectionFactory());
+        return stringRedisTemplate;
+    }
+
+//    @Bean
+//    public RedisConnectionFactory redisConnectionFactory() {
+//        return new LettuceConnectionFactory();
+//    }
+
+//    @Bean
+//    public RedisTemplate<String, Object> tokenRedisTemplate() {
+//        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+//        redisTemplate.setConnectionFactory(redisConnectionFactory());
+//        redisTemplate.setKeySerializer(new StringRedisSerializer());
+//
+//        // Token 객체를 json 형태로 깨지지 않고 받기 위한 직렬화
+//        redisTemplate.setValueSerializer(new StringRedisSerializer());
+//        return redisTemplate;
+//    }
 }
