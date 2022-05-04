@@ -9,13 +9,6 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 사업자등록번호 상태 조회 Request
- * @author jjaen
- * @version 1.0.0
- * 작성일 2022/03/29
-**/
-//@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor

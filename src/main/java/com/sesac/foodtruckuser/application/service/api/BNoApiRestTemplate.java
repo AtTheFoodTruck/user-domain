@@ -27,13 +27,6 @@ public class BNoApiRestTemplate {
         this.restTemplate = new RestTemplate();
     }
 
-    /**
-     * 사업자등록번호 상태조회 API
-     * Uri 수정 - jaemin
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/03/29
-    **/
     public boolean statusApi(BNoApiRequestDto.BNoStatusDto statusDto) {
         // UriComponents
         URI uriComponents = UriComponentsBuilder
@@ -43,14 +36,12 @@ public class BNoApiRestTemplate {
                 .encode()
                 .toUri();
 
-        // HttpEntity(body, header)
         ApiReqStatusDto dto = ApiReqStatusDto.builder()
                                             .bNo(statusDto.getBNo())
                                             .build();
 
         HttpEntity<ApiReqStatusDto> entity = new HttpEntity<>(dto, new HttpHeaders());
 
-        // Request API
         ResponseEntity<String> response = null;
         try {
             response = restTemplate.exchange(uriComponents, HttpMethod.POST, entity, String.class);
@@ -59,7 +50,6 @@ public class BNoApiRestTemplate {
             return false;
         }
 
-        // Json Parsing
         JSONParser jsonParser = new JSONParser();
         JSONObject body;
         try {
@@ -69,19 +59,9 @@ public class BNoApiRestTemplate {
             return false;
         }
 
-        // status 가 OK 거나, 등록된 사용자 ("match_cnt" = 1)
         return "OK".equals(body.get("status_code")) && body.containsKey("match_cnt");
     }
 
-
-
-
-    /**
-     * 사업자등록번호 진위확인 API
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/03/29
-    **/
     public boolean validateApi(BNoApiRequestDto.BNoValidateDto validateDto) {
         URI uriComponents = UriComponentsBuilder
                 .fromHttpUrl("https://api.odcloud.kr/api/nts-businessman/v1/validate")
@@ -90,7 +70,6 @@ public class BNoApiRestTemplate {
                 .encode()
                 .toUri();
 
-        // HttpEntity(body, header)
         ApiReqValidateDto dto = ApiReqValidateDto.builder()
                                             .bNoValidateDto(validateDto)
                                             .build();
@@ -105,7 +84,6 @@ public class BNoApiRestTemplate {
             return false;
         }
 
-        // Json Parsing
         JSONParser jsonParser = new JSONParser();
         JSONObject body;
         try {
@@ -115,7 +93,6 @@ public class BNoApiRestTemplate {
             return false;
         }
 
-        // status 가 OK 거나, valid 가 01 인 사업자등록번호 ("valid_cnt" = 1)
         return "OK".equals(body.get("status_code")) && body.containsKey("valid_cnt");
     }
 }

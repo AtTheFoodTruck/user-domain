@@ -11,12 +11,7 @@ import lombok.Getter;
 
 @Schema(description = "응답")
 public class UserResponseDto {
-    /**
-     * 회원가입 응답
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022/03/30
-     **/
+
     @Schema(description = "로그인 응답")
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
     @Data
@@ -28,11 +23,9 @@ public class UserResponseDto {
         private String email;
         @Schema(description = "phoneNum")
         private String phoneNum;
-        // manager
         @Schema(description = "bNo")
         private String bNo;
 
-        // Entity -> Dto
         public JoinUserDto(User joinMember) {
             this.username = joinMember.getUsername();
             this.email = joinMember.getEmail();
@@ -40,12 +33,6 @@ public class UserResponseDto {
             this.bNo = joinMember.getBNo();
         }
     }
-    /**
-     * Token 응답 DTO
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022-04-09
-    **/
     @AllArgsConstructor
     @Getter
     public static class TokenDto {

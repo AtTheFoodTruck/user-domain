@@ -20,9 +20,8 @@ public class CreateUserDto {
     private String username;
     private String phoneNum;
     private boolean activated;
-    private String bNo; // 사업자등록번호
+    private String bNo;
 
-    // entity -> dto
     public CreateUserDto(User user) {
         this.userId = user.getId();
         this.email = user.getEmail();
@@ -32,12 +31,6 @@ public class CreateUserDto {
         this.bNo = user.getBNo();
     }
 
-    /**
-     * CreateUserDto 의 설명 적기
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022/04/12
-     **/
     @Data
     public static class UserInfoResponse {
         private Long userId;

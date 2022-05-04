@@ -21,11 +21,4 @@ public abstract class BaseEntity {
 
     @LastModifiedDate
     private LocalDateTime modifiedDate;
-
-//    @CreatedBy
-//    @Column(updatable = false)
-//    private String createdBy;
-//
-//    @LastModifiedBy
-//    private String modifiedBy;
 }

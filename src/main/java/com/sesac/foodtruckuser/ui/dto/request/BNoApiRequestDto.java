@@ -13,12 +13,6 @@ import javax.validation.constraints.NotBlank;
 
 public class BNoApiRequestDto {
 
-    /**
-     * 사업자등록번호 상태 조회 요청
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/03/29
-     **/
     @Schema(description = "사업자 등록번호")
     @Getter
     @AllArgsConstructor
@@ -32,12 +26,6 @@ public class BNoApiRequestDto {
         private String bNo;  // 사업자 등록 번호
     }
 
-    /**
-     * 사업자등록번호 진위 확인 요청
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/03/29
-     **/
     @Schema(description = "사업자 등록 정보")
     @Getter @Builder
     @AllArgsConstructor

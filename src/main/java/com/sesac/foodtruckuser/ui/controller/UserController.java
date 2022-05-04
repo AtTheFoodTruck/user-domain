@@ -24,12 +24,6 @@ public class UserController {
 
     private final UserRepository userRepository;
 
-    /**
-     * Request From Item Dommain - 회원정보 조회
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022-04-04
-     **/
     @ApiOperation(value = "Item Domain에서 요청 - 회원정보 조회")
     @GetMapping("/api/v1/users/{userId}")
     public CreateUserDto userInfo(@RequestHeader(value="Authorization", required = true) String authorizationHeader,
@@ -42,12 +36,6 @@ public class UserController {
         return new CreateUserDto(user);
     }
 
-    /**
-     * Request From Item Domain - user정보에 storeId 저장
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022-04-09
-    **/
     @ApiOperation(value = "Item Domain에서 요청 - user정보 저장")
     @PostMapping("/api/v1/stores")
     @Transactional
@@ -59,13 +47,7 @@ public class UserController {
 
         user.setStoreId(storeInfo.getStoreId());
     }
-    /**7
-     * Request From Order Domain - 점주 주문 조회 페이지
-     * userId, userName
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022/04/12
-    **/
+
     @ApiOperation(value = "Order Domain에서 요청 - 점주 주문 조회 페이지")
     @GetMapping("/api/v1/info/{userIds}")
     public ResponseEntity<Result> getUsers(@RequestHeader(value="Authorization", required = true) String authorizationHeader,

@@ -28,19 +28,10 @@ public class BusinessApiController {
     public String health() {
         return "health_check";
     }
-
-    /**
-     * 사업자등록번호 상태조회
-     * validation check, return type 수정 - jaemin
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/03/29
-    **/
     @ApiOperation(value = "사업자등록번호 상태조회")
     @PostMapping("/status")
     public ResponseEntity<?> bNoStatus(@RequestBody BNoApiRequestDto.BNoStatusDto statusDto, BindingResult results) {
 
-        // validation check
         if (results.hasErrors()) {
             return response.invalidFields(Helper.refineErrors(results));
         }
@@ -52,18 +43,10 @@ public class BusinessApiController {
         return response.success( "인증 성공");
     }
 
-    /**
-     * 사업자등록번호 진위여부
-     * validation check, return type 수정 - jaemin
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/03/29
-    **/
     @ApiOperation(value = "사업자등록번호 진위여부")
     @PostMapping("/validate")
     public ResponseEntity<?> bNoValidate(@RequestBody BNoApiRequestDto.BNoValidateDto BNoValidateDto, BindingResult results) {
 
-        // validation check
         if (results.hasErrors()) {
             return response.invalidFields(Helper.refineErrors(results));
         }

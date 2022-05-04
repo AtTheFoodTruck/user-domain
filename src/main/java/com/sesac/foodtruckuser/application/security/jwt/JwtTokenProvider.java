@@ -42,13 +42,7 @@ public class JwtTokenProvider implements Serializable, InitializingBean {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
-    /**
-     * token 의 모든 claim 반환
-     * @param token: jwt token
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/03/27
-     **/
+
     private Claims getAllClaimsFromToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -57,13 +51,6 @@ public class JwtTokenProvider implements Serializable, InitializingBean {
                 .getBody();
     }
 
-    /**
-     * token 으로부터 username, role map 반환
-     * @param token: jwt access token
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/03/27
-    **/
     public Map<String, Object> getUserParseInfo(String token) {
         Claims claims = getAllClaimsFromToken(token);
         Map<String, Object> result = new HashMap<>();
@@ -75,12 +62,6 @@ public class JwtTokenProvider implements Serializable, InitializingBean {
         return result;
     }
 
-    /**
-     * access token 에 담겨있는 권한 정보들(claims)을 이용해 Authentication 객체 리턴
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/03/27
-    **/
     public Authentication getAuthentication(String token) {
         Claims claims = getAllClaimsFromToken(token);
 
@@ -94,13 +75,6 @@ public class JwtTokenProvider implements Serializable, InitializingBean {
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
-    /**
-     * AccessToken 생성
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022-03-27
-    **/
-    // Authentication 객체의 권한 정보를 이용해서 토큰을 생성
     public String createToken(Authentication authentication, boolean isRefreshToken) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -121,14 +95,7 @@ public class JwtTokenProvider implements Serializable, InitializingBean {
                 .setExpiration(validity)
                 .compact();
     }
-    /**
-     * Jwt token 유효성 여부
-     * @author jjaen
-     * @modifier jaemin, validation 메서드 수정
-     * @version 1.0.0
-     * 작성일 2022/03/27
-     * 수정일 2022/03/28
-     **/
+
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -145,12 +112,6 @@ public class JwtTokenProvider implements Serializable, InitializingBean {
         return false;
     }
 
-    /**
-     * 토큰 유효성, 만료시간 체크
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022-03-31
-     **/
     public boolean validateExpiration(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -161,13 +122,6 @@ public class JwtTokenProvider implements Serializable, InitializingBean {
         }
     }
 
-    /**
-     * AccessToken의 남은 유효시간 반환
-     *
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022-03-29
-     **/
     public Long getExpiration(String accessToken) {
         // accessToken 남은 유효시간
         Date expiration = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody().getExpiration();

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-// 유효한 자격증명을 제공하지 않고 접근하려 할대 401 Unauthorized에러를 리턴할 클래스
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override

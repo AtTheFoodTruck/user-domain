@@ -15,28 +15,22 @@ public class User extends BaseEntity {
     @Column(name = "user_id")
     private Long id;
     private String email;
-    private String username; // nickname
+    private String username;
     private String password;
     private String phoneNum;
     private boolean activated;
-    private String bNo; // 사업자등록번호
+    private String bNo;
 
-    // Order
     private Long orderId;
 
-    // Store
     private Long storeId;
 
-    // Review
     private Long reviewId;
 
-    // Like
     private Long likeId;
 
-    // Cart
     private Long cartId;
 
-    // Authority
     @ManyToMany
     @JoinTable(
             name = "user_authority",
@@ -45,17 +39,14 @@ public class User extends BaseEntity {
     private Set<Authority> authorities;
 
 
-    // 회원정보 수정 - nickname
     public void changeUser(String username) {
         this.username = username;
     }
 
-    // 회원정보 수정 - password
     public void encodingPassword(String password) {
         this.password = password;
     }
 
-    // 연관관계 편의 메서드 //
     public void setStoreId(Long storeId) {
         this.storeId = storeId;
     }

@@ -41,19 +41,4 @@ public class RedisConfig {
         return stringRedisTemplate;
     }
 
-//    @Bean
-//    public RedisConnectionFactory redisConnectionFactory() {
-//        return new LettuceConnectionFactory();
-//    }
-
-//    @Bean
-//    public RedisTemplate<String, Object> tokenRedisTemplate() {
-//        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-//        redisTemplate.setConnectionFactory(redisConnectionFactory());
-//        redisTemplate.setKeySerializer(new StringRedisSerializer());
-//
-//        // Token 객체를 json 형태로 깨지지 않고 받기 위한 직렬화
-//        redisTemplate.setValueSerializer(new StringRedisSerializer());
-//        return redisTemplate;
-//    }
 }

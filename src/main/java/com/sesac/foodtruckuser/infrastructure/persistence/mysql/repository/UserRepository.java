@@ -10,9 +10,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
 
-    // 중복 닉네임 검증
     int countByUsername(String username);
 
-    // 중복 이메일 검증
     int countByEmail(String email);
 }

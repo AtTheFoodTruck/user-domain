@@ -12,12 +12,6 @@ import javax.validation.constraints.NotBlank;
 
 public class UserRequestDto {
 
-    /**
-     * 개인 회원가입 요청
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022/03/30
-     **/
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
     @Data
     @Builder
@@ -39,12 +33,6 @@ public class UserRequestDto {
         private String phoneNum;
     }
 
-    /**
-     * 점주 회원가입 요청
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022/03/30
-     **/
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
     @Builder
     @Data
@@ -57,7 +45,7 @@ public class UserRequestDto {
         private String email;
 
         @NotBlank(message = "닉네임 정보는 필수입니다.")
-        private String username; //닉네임
+        private String username;
 
         @NotBlank(message = "비밀번호는 필수입니다.")
         private String password;
@@ -71,12 +59,6 @@ public class UserRequestDto {
         private String bNo;
     }
 
-    /**
-     * 로그인 요청
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022/03/30
-     **/
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
     @Data
     @AllArgsConstructor
@@ -91,12 +73,6 @@ public class UserRequestDto {
         private String password;
     }
 
-    /**
-     * 로그아웃 요청
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022/03/30
-     **/
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
     @Getter
     @Setter
@@ -108,12 +84,6 @@ public class UserRequestDto {
         private String accessToken;
     }
 
-    /**
-     * 이름 업데이트 요청
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022/03/30
-     **/
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
     @Getter @Setter
     @AllArgsConstructor
@@ -126,12 +96,6 @@ public class UserRequestDto {
         private String username;
     }
 
-    /**
-     * 비밀번호 업데이트 요청
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022/03/30
-     **/
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
     @Getter
     @AllArgsConstructor
@@ -145,12 +109,6 @@ public class UserRequestDto {
         private String newPassword;
     }
 
-    /**
-     * 중복 체크 검증 DTO
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022-04-09
-    **/
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
     @Builder
     @AllArgsConstructor
@@ -164,36 +122,18 @@ public class UserRequestDto {
         private boolean active;
     }
 
-    /**
-     * 중복 체크 검증 - email
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/04/10
-    **/
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
     @Data
     public static class DuplicateEmail {
         private String email;
     }
 
-    /**
-     * 중복 체크 검증 - nickname
-     * @author jjaen
-     * @version 1.0.0
-     * 작성일 2022/04/10
-     **/
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
     @Data
     public static class DuplicateNickname {
         private String username;
     }
 
-    /**
-     * Token update DTO
-     * @author jaemin
-     * @version 1.0.0
-     * 작성일 2022-04-09
-    **/
     @Schema(description = "Token 갱신 정보")
     @AllArgsConstructor
     @Getter

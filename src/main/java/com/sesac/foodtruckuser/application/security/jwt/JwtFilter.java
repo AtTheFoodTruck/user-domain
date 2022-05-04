@@ -25,24 +25,17 @@ public class JwtFilter extends GenericFilterBean {
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate redisTemplate;
 
-    // 토큰의 인증정보를 SecurityContext에 저장하는 역할 수행
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-
-        //토큰 추출
         String jwt = resolveToken(httpServletRequest);
         String requestURI = httpServletRequest.getRequestURI();
 
-        // 유효성 검증
         if (StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt) && jwtTokenProvider.validateExpiration(jwt)) {
 
-            // Redis에 해당 accessToken logout 여부 확인
             String isLogout = (String) redisTemplate.opsForValue().get(jwt);
             if (ObjectUtils.isEmpty(isLogout)) {
-                // authentication추출
                 Authentication authentication = jwtTokenProvider.getAuthentication(jwt);
-                // SecurityContext에 저장
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 log.info("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
             }
@@ -53,7 +46,6 @@ public class JwtFilter extends GenericFilterBean {
         filterChain.doFilter(servletRequest, servletResponse);
     }
     
-    // Request Header에서 토큰 정보를 꺼내오기 위한 메서드
     private String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
         System.out.println("bearerToken = " + bearerToken);
