@@ -54,13 +54,14 @@
 | 모니터링(추가예정) | - Zipkin </br> - Spring Cloud Sleuth </br> - Prometheus </br> - Grafana|
 
 ### 시스템 아키텍처
+
 <table>
     <tr>
         <td align="center">
-            <img width="1720" alt="CI:CD 파이프라인" src="https://user-images.githubusercontent.com/44490394/168749609-b55e11f8-2e00-4923-bfc2-fc51133630ec.png" width="500" height="500">
+            <img width="2395" alt="CI:CD 파이프라인" src="https://user-images.githubusercontent.com/44490394/168752428-fbaab2e3-fd3e-4aa4-a0ae-b4b0ba967feb.png" width="500" height="500">
         </td>
         <td align="center">
-            <img width="662" alt="MicroService" src="https://user-images.githubusercontent.com/44490394/168751288-1953e812-95bf-4258-8970-abee24b3e2c2.png" width="500" height="500">
+            <img width="1815" alt="MicroService" src="https://user-images.githubusercontent.com/44490394/168751288-1953e812-95bf-4258-8970-abee24b3e2c2.png" width="500" height="500">
         </td>
     </tr>
 </table>
